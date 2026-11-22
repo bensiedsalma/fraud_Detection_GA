@@ -1,42 +1,180 @@
-# Fraud Detection — Genetic Algorithm Decision Trees
+# Fraud Detection Using Genetic Algorithm-Based Decision Trees
 
-This academic project evolves limited-depth binary decision trees with a
-genetic algorithm (GA) and compares them with CART, Random Forest, and
-Gradient Boosting on credit-card fraud detection.
+A Machine Learning project that explores the use of **Genetic Algorithms (GA)** to evolve interpretable binary decision trees for credit card fraud detection.
 
-## Teacher specification implemented
+The project compares the proposed GA-based approach with three classical machine learning models: **CART, Random Forest, and Gradient Boosting**.
 
-- Tree-based binary encoding: `src/genetic_algorithm/representation.py`
-- Subtree crossover: `src/genetic_algorithm/crossover.py`
-- Node mutation: `src/genetic_algorithm/mutation.py`
-- Fitness: **Accuracy − Complexity**: `src/genetic_algorithm/fitness.py`
-- Repair operators and maximum-depth enforcement:
-  `src/genetic_algorithm/repair.py`
-- Predictive and interpretability comparison in `notebooks/evaluation.ipynb`
+## Project Overview
 
-The independent `X_test`/`y_test` set is for final evaluation only. The GA
-receives a split of `X_train`/`y_train` as its training and validation data.
+Credit card fraud detection is a challenging classification problem because fraudulent transactions represent only a small proportion of all transactions.
 
-## Reproducible run order
+This project investigates whether Genetic Algorithms can construct simple and interpretable decision trees while maintaining good predictive performance.
 
-1. Create an environment with `pip install -r requirements.txt`.
-2. Put `creditcard.csv` in `dataset/`.
-3. Run `notebooks/analyse_dataset.ipynb`.
-4. Run `notebooks/preprocessing.ipynb` to create `dataset/processed/`.
-5. Run `notebooks/evaluation.ipynb` from top to bottom.
-6. Run component tests with:
+The main objectives are to:
+- Implement a Genetic Algorithm for decision tree construction.
+- Optimize tree structures using genetic operators.
+- Compare the GA-based model with traditional machine learning algorithms.
+- Evaluate both predictive performance and model complexity.
 
-   ```powershell
-   C:\Users\po\miniconda3\python.exe -B -m unittest discover -s tests -v
-   ```
+## Methodology
 
-## Interpreting results
+The Genetic Algorithm evolves a population of binary decision trees through several operations:
 
-The GA is intentionally optimized for accuracy minus a normalized complexity
-penalty, as required. Precision, recall, F1-score, and confusion matrices are
-reported as additional fraud-detection diagnostics. If the GA is less accurate
-than ensemble models but has fewer leaves or lower depth, that performance /
-interpretability trade-off must be reported rather than hidden.
+| Component | Description |
+|---|---|
+| Representation | Binary decision tree encoding |
+| Selection | Selection of individuals based on fitness |
+| Crossover | Subtree crossover between parent trees |
+| Mutation | Modification of tree nodes |
+| Repair | Validation of tree structure and depth constraints |
+| Fitness | Accuracy − Complexity |
 
-Existing files under `results/` are historical outputs. Rerun the notebooks to
-produce a fresh, internally consistent result set after source changes.
+The fitness function combines predictive accuracy with a complexity penalty to encourage simpler trees.
+
+## Models Compared
+
+Four approaches are evaluated:
+
+1. **Genetic Algorithm Decision Tree** — an evolved decision tree optimized through genetic operations.
+2. **CART** — a classical Classification and Regression Tree.
+3. **Random Forest** — an ensemble of decision trees.
+4. **Gradient Boosting** — an ensemble learning method that builds trees sequentially.
+
+## Dataset
+
+The project uses the Credit Card Fraud Detection dataset.
+
+It contains anonymized transaction features, including:
+- `Time`: time elapsed between transactions.
+- `Amount`: transaction amount.
+- `V1` to `V28`: anonymized numerical features.
+- `Class`: target variable (`0` = legitimate transaction, `1` = fraudulent transaction).
+
+**Dataset source:** [Credit Card Fraud Detection — Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+
+The dataset is not included in this repository. Download it and place `creditcard.csv` inside the `dataset/` directory before running the notebooks.
+
+## Project Structure
+
+```text
+fraud_Detection_GA/
+│
+├── dataset/
+│   └── processed/
+│
+├── notebooks/
+│   ├── analyse_dataset.ipynb
+│   ├── preprocessing.ipynb
+│   └── evaluation.ipynb
+│
+├── src/
+│   ├── decision_tree/
+│   │   └── cart.py
+│   │
+│   ├── genetic_algorithm/
+│   │   ├── representation.py
+│   │   ├── selection.py
+│   │   ├── crossover.py
+│   │   ├── mutation.py
+│   │   ├── repair.py
+│   │   ├── fitness.py
+│   │   └── genetic_algorithm.py
+│   │
+│   └── models_comparison/
+│       └── comparison.py
+│
+├── tests/
+│   └── test_ga_components.py
+│
+├── results/
+│   ├── best_tree/
+│   ├── graphs/
+│   └── tables/
+│
+├── requirements.txt
+├── README.md
+└── REPORT.md
+```
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/bensiedsalma/fraud_Detection_GA.git
+cd fraud_Detection_GA
+```
+
+Install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Place the downloaded `creditcard.csv` file inside:
+
+```text
+dataset/creditcard.csv
+```
+
+## Running the Project
+
+Execute the notebooks in the following order:
+
+1. `notebooks/analyse_dataset.ipynb` — exploratory data analysis.
+2. `notebooks/preprocessing.ipynb` — data cleaning and preprocessing.
+3. `notebooks/evaluation.ipynb` — model training, comparison, and evaluation.
+
+Run the unit tests using:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## Evaluation Metrics
+
+The models are evaluated using:
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Confusion Matrix
+- Training Time
+
+Tree interpretability is also assessed using:
+- Maximum tree depth
+- Number of leaves
+
+The GA fitness function uses accuracy and a normalized complexity penalty. Additional classification metrics are reported to provide a more complete assessment of fraud detection performance.
+
+All models are evaluated on the same independent test set to ensure a fair comparison.
+
+## Results and Visualization
+
+The `results/` directory contains generated outputs, including:
+
+- Model performance comparisons.
+- Decision tree complexity comparisons.
+- Genetic Algorithm convergence history.
+- Confusion matrices.
+- Best evolved decision tree.
+
+These results help analyze the balance between predictive performance and model interpretability.
+
+## Technologies Used
+
+- Python
+- NumPy
+- Pandas
+- Scikit-learn
+- Matplotlib
+- Seaborn
+- Jupyter Notebook
+
+## Authors
+
+**Developed as an academic Data Science project.**
+
+---
+
+*This project explores the application of evolutionary computation to interpretable machine learning for credit card fraud detection.*
