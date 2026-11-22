@@ -48,14 +48,6 @@ means the GA identifies many frauds but also produces many false positives.
 This performance-versus-simplicity trade-off must be reported honestly; the
 tree's interpretability alone does not make it the strongest predictive model.
 
-## Implementation verification
-
-The source includes regression tests for each required GA operator and for the
-comparison path that previously raised `KeyError: 20`. The test command is:
-
-```powershell
-C:\Users\po\miniconda3\python.exe -B -m unittest discover -s tests -v
-```
 
 The full experiment was executed after the source repair. The generated tables,
 figures, and serialized GA tree in `results/` are the current deliverables.
